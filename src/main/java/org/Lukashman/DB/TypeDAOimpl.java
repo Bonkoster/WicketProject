@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.Lukashman.Model.Image;
+import org.Lukashman.Model.Type;
 
-public class ImageDAOimpl implements ImageDAO {
+public class TypeDAOimpl implements TypeDAO {
 
 	static Connection conn = null;
 	static PreparedStatement pstat = null;
@@ -25,10 +26,10 @@ public class ImageDAOimpl implements ImageDAO {
 	
 	
 	@Override
-	public ArrayList<Image> getAll() {
+	public ArrayList<Type> getAll() {
 		
-		ArrayList<Image> images = new ArrayList<>();
-		Image img = new Image();
+		ArrayList<Type> types = new ArrayList<>();
+		Type ty = new Type();
 		
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -36,18 +37,14 @@ public class ImageDAOimpl implements ImageDAO {
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			
 			pstat = conn.prepareStatement("Select * from ?");
-			pstat.setString(1, "image_table");
+			pstat.setString(1, "type_table");
 			
 			rs = pstat.executeQuery();
 			
 			while(rs.next()){
-				img.setId(rs.getInt("image_id"));
-				img.setTitle(rs.getString("image_title"));
-				img.setAuthor(rs.getString("image_author"));
-				img.setLink(rs.getString("image_link"));
-				img.setSub_date(rs.getDate("submission_date"));
-				img.setType(rs.getString("image_type"));
-				images.add(img);
+				ty.setId(rs.getInt("type_id"));
+				ty.setType(rs.getString("type_name"));
+				types.add(ty);
 			}				
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -62,26 +59,26 @@ public class ImageDAOimpl implements ImageDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	return images;		
+		}	return types;		
 	}
 
 	@Override
-	public Image getOne(int id) {
-		Image img = null;
+	public Type getOne(int id) {
+		Type ty = null;
 		
 		try {
 			Class.forName(JDBC_DRIVER);
 			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			
-			pstat = conn.prepareStatement("Select * from ? where image_id = ? ");
-			pstat.setString(1, "image_table");
+			pstat = conn.prepareStatement("Select * from ? where type_id = ? ");
+			pstat.setString(1, "type_table");
 			pstat.setInt(2, id);
 			
 			rs = pstat.executeQuery();
 			
 			while(rs.next()){
-				img = new Image(rs.getInt("image_id"), rs.getString("image_title"), rs.getString("image_author"), rs.getString("image_link"),rs.getString("image_type"));
+				ty = new Type(rs.getInt("type_id"),rs.getString("type_name"));
 			}				
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -96,24 +93,18 @@ public class ImageDAOimpl implements ImageDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}	return img;		
+		}	return ty;		
 	}
 
 	@Override
-	public void addOne(Image im) {	
+	public void addOne(Type im) {	
 		try {
 			Class.forName(JDBC_DRIVER);			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			
-			pstat = conn.prepareStatement("insert into image_table values(?,?,?,?,?)");
-			
-			java.sql.Date dat = new java.sql.Date(new Date().getTime());
-			
-			pstat.setString(1, im.getTitle());
-			pstat.setString(2, im.getLink());
-			pstat.setDate(3, dat);
-			pstat.setString(4, im.getAuthor());
-			pstat.setString(5, im.getType());
+			pstat = conn.prepareStatement("insert into type_table values(?)");
+					
+			pstat.setString(1, im.getType());
 			
 			pstat.executeQuery();
 						
@@ -134,17 +125,14 @@ public class ImageDAOimpl implements ImageDAO {
 	}
 
 	@Override
-	public void UpdateOne(int id,Image im) {
+	public void UpdateOne(int id,Type ty) {
 		try {
 			Class.forName(JDBC_DRIVER);			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			
-			pstat = conn.prepareStatement("update image_table set image_title = ?,image_link = ?, image_author = ?, image_type = ? where image_id = ?");
+			pstat = conn.prepareStatement("update type_table set type_name = ? where type_id = ?");
 			
-			pstat.setString(1, im.getTitle());
-			pstat.setString(2, im.getLink());
-			pstat.setString(3, im.getAuthor());
-			pstat.setString(4, im.getType());
+			pstat.setString(4, ty.getType());
 			pstat.setInt(5, id);
 			
 			pstat.executeQuery();
@@ -172,7 +160,7 @@ public class ImageDAOimpl implements ImageDAO {
 			Class.forName(JDBC_DRIVER);			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			
-			pstat = conn.prepareStatement("delete from image_table where image_id = ?");
+			pstat = conn.prepareStatement("delete from type_table where type_id = ?");
 			pstat.setInt(1, id);
 						
 			pstat.executeQuery();
@@ -202,7 +190,7 @@ public class ImageDAOimpl implements ImageDAO {
 			Class.forName(JDBC_DRIVER);			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 				
-			PreparedStatement pstat = conn.prepareStatement("select count(*) from image_table");
+			PreparedStatement pstat = conn.prepareStatement("select count(*) from type_table");
 			
 			pstat.executeQuery();
 						
@@ -221,32 +209,5 @@ public class ImageDAOimpl implements ImageDAO {
 			}
 		}	return count;
 	}
-
-	@Override
-	public long getTypedCount(String type) {
-		long count = 0;
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-				
-			PreparedStatement pstat = conn.prepareStatement("select count(*) from image_table where i");
-			
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	return count;
-	}	
 
 }

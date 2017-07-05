@@ -9,7 +9,8 @@ public class Image {
 	private String author;
 	private String link;
 	private Date sub_date;
-	
+	private String type;
+
 	public int getId() {
 		return id;
 	}
@@ -50,12 +51,21 @@ public class Image {
 		this.sub_date = sub_date;
 	}
 	
-	public Image(int id, String title, String author, String link) {
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	public Image(int id, String title, String author, String link,String type) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.link = link;
+		this.type = type;
 		sub_date = new Date();
 	}
 	
