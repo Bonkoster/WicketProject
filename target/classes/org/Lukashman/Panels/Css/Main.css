@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-.headdiv {
+.headdiv .contdiv {
 	width: 98%;
 	height: 200px;
 	text-align: center;
@@ -9,4 +9,8 @@
 body {
 	text-align: center;
 	background: rgba(50%, 50%, 50%, .2) url("Images/iron_texture637.jpg") no-repeat;
+}
+
+.contdiv {
+	height: 600px;
 }

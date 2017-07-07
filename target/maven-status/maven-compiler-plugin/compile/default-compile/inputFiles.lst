@@ -1,4 +1,11 @@
-C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\Main\WicketProject.java
-C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\Panels\Sanctus.java
-C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\Pages\HomePage.java
-C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\Pages\SecondPage.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Main\WicketProject.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\DB\ImageDAOimpl.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Model\Image.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Model\Type.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Pages\HomePage.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Panels\HeaderPanel.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\DB\TypeDAO.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\DB\TypeDAOimpl.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\DB\ImageDAO.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Panels\ContentPanel.java
+C:\Users\ForWork\Desktop\JavaProject\WicketProject\src\main\java\org\Lukashman\Security\AuthClass.java
