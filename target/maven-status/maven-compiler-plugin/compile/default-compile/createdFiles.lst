@@ -1,0 +1,3 @@
+org\Lukashman\DB\UserDAO.class
+org\Lukashman\Model\User.class
+org\Lukashman\DB\UserDAOImpl.class

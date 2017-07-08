@@ -14,3 +14,7 @@ body {
 .contdiv {
 	height: 600px;
 }
+
+.menulist < a {
+	display: inline-block;
+}
