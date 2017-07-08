@@ -6,10 +6,12 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.util.string.Strings;
 
 import javafx.scene.control.PasswordField;
 
+@RequireHttps
 public class SignInPage extends WebPage {
 	
 	private String username;
