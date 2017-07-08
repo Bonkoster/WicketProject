@@ -23,6 +23,8 @@ public class WicketProject extends AuthenticatedWebApplication {
 	protected void init() {
 		super.init();		
 		setRootRequestMapper(new CryptoMapper(getRootRequestMapper(),this));
+		getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
+		getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
 		mountPage("/main", HomePage.class);
 		mountPage("/second", SecondPage.class);
 		
