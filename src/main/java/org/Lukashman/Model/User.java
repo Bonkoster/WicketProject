@@ -7,7 +7,7 @@ public class User {
 	private String Password;
 	private String Role;
 	
-	public User(int id, String username, String password, String role) {
+	public User(int id,String username, String password,String role) {
 		super();
 		Id = id;
 		Username = username;
@@ -50,6 +50,13 @@ public class User {
 	public User() {
 		super();
 		this.setRole("User");
+	}
+
+	public User(String username, String password) {
+		super();
+		Username = username;
+		Password = password;
+		this.Role = "User";
 	}
 	
 	

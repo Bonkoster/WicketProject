@@ -2,7 +2,6 @@ package org.Lukashman.DB;
 
 import java.util.ArrayList;
 
-import org.Lukashman.Model.Image;
 import org.Lukashman.Model.Type;
 
 public interface TypeDAO {

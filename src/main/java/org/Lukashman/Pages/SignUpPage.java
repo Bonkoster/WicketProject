@@ -8,26 +8,35 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.protocol.https.RequireHttps;
 import org.apache.wicket.util.string.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javafx.scene.control.PasswordField;
-
-@RequireHttps
-public class SignInPage extends WebPage {
+public class SignUpPage extends WebPage {
 	
+
 	private String username;
 	private String password;
+
+	@Autowired
+	UserDAOImpl UserDAO;
 	
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
 		
 		StatelessForm<Void> form = new StatelessForm<Void>("form"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1512144617186872898L;
+
 			protected void onSubmit() {
 				if (Strings.isEmpty(username) && Strings.isEmpty(password)) {
 					return;
 				}
+				
+				User user = new User(username, password);
+				UserDAO.addOne(user);
 				
 				boolean AuthResult = AuthenticatedWebSession.get().signIn(username, password);
 				

@@ -3,6 +3,7 @@ package org.Lukashman.Main;
 import org.Lukashman.Pages.HomePage;
 import org.Lukashman.Pages.SecondPage;
 import org.Lukashman.Pages.SignInPage;
+import org.Lukashman.Pages.SignUpPage;
 import org.Lukashman.Security.AuthClass;
 import org.apache.wicket.Page;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
@@ -33,6 +34,7 @@ public class WicketProject extends AuthenticatedWebApplication {
 		mountPage("/main", HomePage.class);
 		mountPage("/second", SecondPage.class);
 		mountPage("/signIn", SignInPage.class);
+		mountPage("/signUp", SignUpPage.class);
 		
 	}
 

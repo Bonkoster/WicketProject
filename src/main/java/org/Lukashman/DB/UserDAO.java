@@ -8,7 +8,7 @@ public interface UserDAO {
 	
 	public ArrayList<User> getAll();
 	
-	public User getOne(int id);
+	public User getOne(String username);
 	
 	public void addOne(User us);
 	

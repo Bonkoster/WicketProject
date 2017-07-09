@@ -1,252 +1,78 @@
 package org.Lukashman.DB;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import org.Lukashman.Model.Image;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 public class ImageDAOimpl implements ImageDAO {
 
-	static Connection conn = null;
-	static PreparedStatement pstat = null;
-	static ResultSet rs = null;
-		
-	final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    final String DB_URL = "jdbc:mysql://localhost/wicketDB";
+	public JdbcTemplate jdbcTemp;
 	
-	final String USERNAME = "root";
-	final String PASSWORD = "root";
+	public void setJdbcTemp(JdbcTemplate jdbcTemp) {
+		this.jdbcTemp = jdbcTemp;
+	}
 
-	
-	
 	@Override
 	public ArrayList<Image> getAll() {
-		
-		ArrayList<Image> images = new ArrayList<>();
-		Image img = new Image();
-		
-		try {
-			Class.forName(JDBC_DRIVER);
-			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			pstat = conn.prepareStatement("Select * from ?");
-			pstat.setString(1, "image_table");
-			
-			rs = pstat.executeQuery();
-			
-			while(rs.next()){
-				img.setId(rs.getInt("image_id"));
-				img.setTitle(rs.getString("image_title"));
-				img.setAuthor(rs.getString("image_author"));
-				img.setLink(rs.getString("image_link"));
-				img.setSub_date(rs.getDate("submission_date"));
-				img.setType(rs.getString("image_type"));
-				images.add(img);
-			}				
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		List<Image> images = jdbcTemp.query("select * from image_table", new RowMapper<Image>(){
+			public Image mapRow(ResultSet rs, int rowNum) throws SQLException{
+				Image image = new Image();
+				image.setAuthor(rs.getString("image_author"));
+				image.setLink(rs.getString("image_link"));
+				image.setTitle(rs.getString("image_title"));
+				image.setType(rs.getString("image_type"));
+				image.setSub_date(rs.getDate("submission_date"));
+				return image;
 			}
-		}	return images;		
+				});
+		return (ArrayList<Image>) images;
 	}
 
 	@Override
 	public Image getOne(int id) {
-		Image img = null;
+		Image image = jdbcTemp.queryForObject(
+				"select * from image_table where image_id = ?", Image.class, id);
+		return image;
+	}
+
+	@Override
+	public void addOne(Image im) {
+		jdbcTemp.update(
+				"insert into image_table (image_title,image_link,submission_date,image_author,image_type) values (?, ?, ?, ?, ?)", 
+				im.getTitle(),im.getLink(),im.getSub_date(),im.getAuthor(),im.getType());
 		
-		try {
-			Class.forName(JDBC_DRIVER);
-			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			pstat = conn.prepareStatement("Select * from ? where image_id = ? ");
-			pstat.setString(1, "image_table");
-			pstat.setInt(2, id);
-			
-			rs = pstat.executeQuery();
-			
-			while(rs.next()){
-				img = new Image(rs.getInt("image_id"), rs.getString("image_title"), rs.getString("image_author"), rs.getString("image_link"),rs.getString("image_type"));
-			}				
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	return img;		
 	}
 
 	@Override
-	public void addOne(Image im) {	
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			pstat = conn.prepareStatement("insert into image_table values(?,?,?,?,?)");
-			
-			java.sql.Date dat = new java.sql.Date(new Date().getTime());
-			
-			pstat.setString(1, im.getTitle());
-			pstat.setString(2, im.getLink());
-			pstat.setDate(3, dat);
-			pstat.setString(4, im.getAuthor());
-			pstat.setString(5, im.getType());
-			
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
-	}
-
-	@Override
-	public void UpdateOne(int id,Image im) {
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			pstat = conn.prepareStatement("update image_table set image_title = ?,image_link = ?, image_author = ?, image_type = ? where image_id = ?");
-			
-			pstat.setString(1, im.getTitle());
-			pstat.setString(2, im.getLink());
-			pstat.setString(3, im.getAuthor());
-			pstat.setString(4, im.getType());
-			pstat.setInt(5, id);
-			
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
+	public void UpdateOne(int id, Image im) {
+		jdbcTemp.update(
+				"update image_table set image_title = ?, image_link = ?,image_author = ?, image_type = ? where image_id = ?",
+				im.getTitle(),im.getLink(),im.getAuthor(),im.getType(),id);
 		
 	}
 
 	@Override
 	public void DeleteOne(int id) {
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			
-			pstat = conn.prepareStatement("delete from image_table where image_id = ?");
-			pstat.setInt(1, id);
-						
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
-		
+		jdbcTemp.update("delete from image_table where image_id = ?", id);
 		
 	}
 
 	@Override
 	public long getCount() {
-		long count = 0;
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-				
-			PreparedStatement pstat = conn.prepareStatement("select count(*) from image_table");
-			
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	return count;
+		long count = jdbcTemp.queryForObject("select count(*) from image_table", long.class);
+		return count;
 	}
 
 	@Override
 	public long getTypedCount(String type) {
-		long count = 0;
-		try {
-			Class.forName(JDBC_DRIVER);			
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-				
-			PreparedStatement pstat = conn.prepareStatement("select count(*) from image_table where i");
-			
-			pstat.executeQuery();
-						
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstat.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	return count;
-	}	
-
+		long count = jdbcTemp.queryForObject("select count(*) from image_table where image_type = ?", long.class, type);
+		return count;
+	}
 }
+	
+	
