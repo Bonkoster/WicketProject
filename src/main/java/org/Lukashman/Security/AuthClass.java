@@ -5,10 +5,13 @@ import org.Lukashman.Model.User;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AuthClass extends AuthenticatedWebSession {
 
+	@Autowired
 	private UserDAOImpl userDAO;
+	
 	private static User user = new User();
 	
 	public AuthClass(Request request) {
@@ -18,7 +21,6 @@ public class AuthClass extends AuthenticatedWebSession {
 
 	@Override
 	protected boolean authenticate(String username, String password) {
-		userDAO = new UserDAOImpl();
 		user = userDAO.getOne(username);
 		return username.equals(user.getUsername()) && password.equals(user.getPassword());
 	}

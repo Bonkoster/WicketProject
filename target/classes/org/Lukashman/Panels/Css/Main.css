@@ -1,4 +1,5 @@
 @CHARSET "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto');
 
 .headdiv .contdiv {
 	width: 98%;
@@ -19,4 +20,37 @@ body {
 	display: inline-block;
 	text-decoration: none;
 	color: red;
+	font-family: 'Oswald';
+}
+
+ul {
+	font-size: 0px;
+}
+
+a {
+	font-size: 20px;
+}
+
+.menulist > a {
+	padding-right: 5px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.menulist > a:hover {
+	color: gray;
+	background-color: #e4cbcd;
+
+}
+
+.menu {
+	text-align: right;
+	height: 15%;
+	width: 98%;
+	background-color: #100101;
+	border: 4px double red;
+}
+
+.menu > ul {
+	
 }

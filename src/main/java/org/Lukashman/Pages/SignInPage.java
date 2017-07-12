@@ -1,5 +1,7 @@
 package org.Lukashman.Pages;
 
+import java.util.logging.Logger;
+
 import org.Lukashman.DB.UserDAOImpl;
 import org.Lukashman.Model.User;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
@@ -18,6 +20,8 @@ public class SignInPage extends WebPage {
 	
 	private String username;
 	private String password;
+	
+
 	
 	@Override
 	protected void onInitialize() {

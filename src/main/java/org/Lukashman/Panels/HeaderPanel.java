@@ -13,7 +13,6 @@ public class HeaderPanel extends Panel {
 
 	public HeaderPanel(String id) {
 		super(id);
-		add(new Label("head","Monster"));
 		
 		if(!AuthenticatedWebSession.get().isSignedIn()){
 			add(new Link<Void>("signin") {

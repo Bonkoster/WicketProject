@@ -2,10 +2,13 @@ package org.Lukashman.Pages;
 
 import org.Lukashman.DB.UserDAOImpl;
 import org.Lukashman.Model.User;
+import org.apache.log4j.Logger;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.string.Strings;
@@ -13,38 +16,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SignUpPage extends WebPage {
 	
-
+	private static final long serialVersionUID = -2100817917319866515L;
 	private String username;
 	private String password;
+	
+	private static final Logger logger = Logger.getLogger(SignUpPage.class);
 
 	@Autowired
 	UserDAOImpl UserDAO;
+	public static User user;
 	
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
-		
-		StatelessForm<Void> form = new StatelessForm<Void>("form"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -1512144617186872898L;
+	public SignUpPage() {
+		Form<?> form = new Form<Void>("form"){
 
 			protected void onSubmit() {
 				if (Strings.isEmpty(username) && Strings.isEmpty(password)) {
 					return;
 				}
-				
-				User user = new User(username, password);
+				user = new User(username, password);
+				System.out.println(user.getUsername() + user.getPassword());
 				UserDAO.addOne(user);
 				
-				boolean AuthResult = AuthenticatedWebSession.get().signIn(username, password);
+				setResponsePage(HomePage.class);
 				
-				if(AuthResult) {
-					setResponsePage(HomePage.class);
-				}
-				
-			}	
+			}
+			
+			@Override
+			protected void onError() {
+				// TODO Auto-generated method stub
+				super.onError();
+				System.out.println("Something wrong");
+			}
 		};
 		
 		form.setDefaultModel(new CompoundPropertyModel(this));

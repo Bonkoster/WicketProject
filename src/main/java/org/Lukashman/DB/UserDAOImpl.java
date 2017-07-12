@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void addOne(User us) {
 		jdbcTemp.update(
-				"insert into user_table (user_name,user_password,user_role) values (?, ?, ?)",us.getUsername(),us.getPassword(),us.getRole()); 
+				"insert into user_table (user_name,user_password,user_role) values (?, ?, ?)",us.getUsername(),us.getPassword(),"User"); 
 		
 	}
 
