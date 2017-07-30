@@ -12,10 +12,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class ImageDAOimpl implements ImageDAO,Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4325876303372225275L;
 	public JdbcTemplate jdbcTemp;
 	
 	public void setJdbcTemp(JdbcTemplate jdbcTemp) {

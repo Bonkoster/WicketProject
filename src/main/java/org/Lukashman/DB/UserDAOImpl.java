@@ -1,5 +1,6 @@
 package org.Lukashman.DB;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,16 +18,16 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 public class UserDAOImpl implements UserDAO, Serializable {
 	
-	private static final long serialVersionUID = -8456218232834938641L;
-	
 	@Autowired
-	public JdbcTemplate jdbcTemp;
+	public static JdbcTemplate jdbcTemp;
+	
 	public void setJdbcTemp(JdbcTemplate jdbcTemp) {
 		this.jdbcTemp = jdbcTemp;
 	}
 	
 	@Autowired
-	public NamedParameterJdbcTemplate jdbcNamedTemplate;
+	public static NamedParameterJdbcTemplate jdbcNamedTemplate;
+	
 	public void setJdbcNamedTemplate(NamedParameterJdbcTemplate jdbcNamedTemplate) {
 		this.jdbcNamedTemplate = jdbcNamedTemplate;
 	}

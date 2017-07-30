@@ -1,5 +1,19 @@
 <wicket:panel>
-	<div>
-		<!--  <div wicket:id="sidebar" ></div>-->
+	<meta charset="utf-8" />
+	<div class="contdiv" >
+		<div id="sidebar" class="additional" >
+			<div wicket:id="Folders">
+			</div>
+		</div>
+		
+		<div id="contbar" class="additional"  >
+			<div wicket:id="AddImage">
+				<form class="formInput" wicket:id="FormAddImage">
+					<label>Название: </label><input wicket:id="NameField" type="text" class="fieldForText" ><br/>
+					<label>Ссылка:  </label><input wicket:id="LinkField" type="text" class="fieldForText" ><br/>
+					<input type="submit" value="Запостить">
+				</form>
+			</div>
+		</div>
 	</div>
 </wicket:panel>

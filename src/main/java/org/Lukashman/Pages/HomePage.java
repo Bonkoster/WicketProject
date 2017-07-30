@@ -12,6 +12,7 @@ import org.Lukashman.Panels.HeaderPanel;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.jdal.annotation.SerializableProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,7 +23,10 @@ public class HomePage extends WebPage implements Serializable {
 	private HeaderPanel header;
 	private ContentPanel content;
 	
-	private ApplicationContext ctx = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	@SerializableProxy
+	private ClassPathXmlApplicationContext cp = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	
+	private ApplicationContext ctx = cp;
 	private UserDAOImpl UserDao = ctx.getBean("UserDAO",UserDAOImpl.class);
 	
 	private List<User> users;

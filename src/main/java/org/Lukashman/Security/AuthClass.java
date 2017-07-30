@@ -1,5 +1,6 @@
 package org.Lukashman.Security;
 
+import java.beans.Transient;
 import java.util.function.ToDoubleBiFunction;
 
 import org.Lukashman.DB.UserDAOImpl;
@@ -13,7 +14,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AuthClass extends AuthenticatedWebSession {
 
-	ApplicationContext ctx = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	private static ClassPathXmlApplicationContext cp = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	
+	private static ApplicationContext ctx = cp;
 	UserDAOImpl UserDao = ctx.getBean("UserDAO",UserDAOImpl.class);
 	
 	private User user;
