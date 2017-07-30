@@ -1,5 +1,6 @@
 package org.Lukashman.DB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,8 +9,12 @@ import org.Lukashman.Model.Type;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class TypeDAOimpl implements TypeDAO {
+public class TypeDAOimpl implements TypeDAO,Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1091930076644253685L;
 	public JdbcTemplate jdbcTemp;
 	
 	public void setJdbcTemp(JdbcTemplate jdbcTemp) {

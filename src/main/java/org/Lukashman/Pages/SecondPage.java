@@ -1,5 +1,7 @@
 package org.Lukashman.Pages;
 
+import java.io.Serializable;
+
 import org.Lukashman.Panels.ContentPanel;
 import org.Lukashman.Panels.HeaderPanel;
 import org.apache.wicket.Application;
@@ -10,8 +12,9 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.protocol.https.RequireHttps;
 
 @RequireHttps
-public class SecondPage extends WebPage {
+public class SecondPage extends WebPage implements Serializable {
 	
+	private static final long serialVersionUID = 1305932261525643735L;
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();

@@ -5,10 +5,12 @@
 <title>Sign In</title>
 </head>
 <body>
-
-	<form wicket:id="form">
-		<label>Username: </label> <input type="text" wicket:id="username"/><br/>
-		<label>Password: </label> <input type="password" wicket:id="password" /><br/>
+	<div align="center" >
+		<span wicket:id="header"></span>
+	</div>
+	<form class="formInput" id="signform" wicket:id="form">
+		<label>Username: </label> <input type="text" wicket:id="username" class="fieldForText" /><br/>
+		<label>Password: </label> <input type="password" wicket:id="password" class="fieldForText"/><br/>
 		<input type="submit" value="Войти" >
 	</form>
 </body>

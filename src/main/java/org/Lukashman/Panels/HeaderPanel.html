@@ -1,15 +1,25 @@
 <wicket:panel>
 	<header>
+	<meta charset="utf-8" />
+	<script type="text/javascript" src="JS/AdditionalScript.js"></script>
 		<wicket:link>
 	<link rel="stylesheet" href="Css/Main.css"  type="text/css"/>
 	<link rel="shortcut icon" href="favicon.ico"/>
 		<div class="menu">
-			<ul class = "menulist">
-				<a href="HomePage.html">Home</a>
-				<a href="SecondPage.html">Second</a>
+		<div class="signmenu">
+				<span id="signs"  wicket:id="sign">
 				<a wicket:id="signin">Sign In</a>
 				<a wicket:id="signup">Sign Up</a>
-			</ul>
+				</span>
+				<span id="logn" wicket:id="logout">
+				<label wicket:id="person"></label>
+				<a wicket:id="logu">Log Out</a>
+				</span>
+		</div>
+			<div class = "menulist">
+				<a href="HomePage.html">Home</a>
+				<a href="SecondPage.html">Second</a>
+			</div>
 		</div>
 		</wicket:link>
 		

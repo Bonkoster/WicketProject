@@ -1,5 +1,6 @@
 package org.Lukashman.DB;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,8 +10,12 @@ import org.Lukashman.Model.Image;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class ImageDAOimpl implements ImageDAO {
+public class ImageDAOimpl implements ImageDAO,Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4325876303372225275L;
 	public JdbcTemplate jdbcTemp;
 	
 	public void setJdbcTemp(JdbcTemplate jdbcTemp) {

@@ -1,27 +1,30 @@
 package org.Lukashman.Security;
 
+import java.util.function.ToDoubleBiFunction;
+
 import org.Lukashman.DB.UserDAOImpl;
 import org.Lukashman.Model.User;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AuthClass extends AuthenticatedWebSession {
 
-	@Autowired
-	private UserDAOImpl userDAO;
+	ApplicationContext ctx = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	UserDAOImpl UserDao = ctx.getBean("UserDAO",UserDAOImpl.class);
 	
-	private static User user = new User();
+	private User user;
 	
 	public AuthClass(Request request) {
 		super(request);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected boolean authenticate(String username, String password) {
-		user = userDAO.getOne(username);
+		user = UserDao.getOne(username);
 		return username.equals(user.getUsername()) && password.equals(user.getPassword());
 	}
 
@@ -39,7 +42,6 @@ public class AuthClass extends AuthenticatedWebSession {
 			roles.add(Roles.ADMIN);
 		}
 		
-		return new Roles();
+		return roles;
 	}
-
 }
